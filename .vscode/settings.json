@@ -1,0 +1,10 @@
+{
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.associations": {
+        "*.css": "tailwindcss"
+    }
+}

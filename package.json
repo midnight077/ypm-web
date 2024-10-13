@@ -1,0 +1,43 @@
+{
+    "name": "ypm-web",
+    "version": "0.1.0",
+    "description": "Web app for YouTube Playlist Manager",
+    "author": "Nishit Jain <nishitj077@gmail.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/midnight077/ypm-web.git"
+    },
+    "homepage": "https://github.com/midnight077/ypm-web#readme",
+    "bugs": {
+        "url": "https://github.com/midnight077/ypm-web/issues"
+    },
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "prepare": "husky",
+        "format": "prettier . --write --ignore-path .gitignore",
+        "format:check": "prettier . --check --ignore-path .gitignore"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^6.6.0",
+        "@fortawesome/free-brands-svg-icons": "^6.6.0",
+        "@fortawesome/free-regular-svg-icons": "^6.6.0",
+        "@fortawesome/free-solid-svg-icons": "^6.6.0",
+        "@fortawesome/react-fontawesome": "^0.2.2",
+        "next": "14.2.15",
+        "react": "^18",
+        "react-dom": "^18",
+        "sharp": "^0.33.5"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.20",
+        "husky": "^9.1.6",
+        "lint-staged": "^15.2.10",
+        "postcss": "^8",
+        "prettier": "^3.3.3",
+        "tailwindcss": "^3.4.1"
+    }
+}
