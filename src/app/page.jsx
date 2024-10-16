@@ -1,18 +1,9 @@
-import { redirect } from "next/navigation";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 
-import { auth, signIn } from "@utils/auth";
+import { signIn } from "@utils/auth";
 
 export default async function HomePage() {
-    const session = await auth();
-    const user = session?.user;
-
-    if (user) {
-        redirect("/dashboard");
-    }
-
     return (
         <div className="hero min-h-screen">
             <div className="hero-content flex-col">
