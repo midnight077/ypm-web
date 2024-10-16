@@ -3,10 +3,16 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function BookmarkForm() {
     return (
-        <form>
+        <form
+            action={async (formData) => {
+                "use server";
+                console.log(formData);
+            }}
+        >
             <div className="form-control mt-4">
                 <input
                     type="url"
+                    name="url"
                     placeholder="Paste YouTube Playlist URL here..."
                     required
                     className="input input-bordered"
