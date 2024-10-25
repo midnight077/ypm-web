@@ -6,10 +6,9 @@ import { useRouter } from "next/navigation";
 
 import Image from "next/image";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
+import SmartLogoutForm from "./SmartLogoutForm";
 
-export default function AvatarDropdown({ logoutAction }) {
+export default function AvatarDropdown() {
     const { data: session, status } = useSession();
     const [user, setUser] = useState({ name: "", email: "", image: null });
     const router = useRouter();
@@ -37,6 +36,7 @@ export default function AvatarDropdown({ logoutAction }) {
                             alt={user.name}
                             src={user.image}
                             fill
+                            sizes="96px"
                             priority
                             quality={100}
                         />
@@ -61,18 +61,8 @@ export default function AvatarDropdown({ logoutAction }) {
                     <div className="card-body">
                         <span className="font-bold">{user.name}</span>
                         <span>{user.email}</span>
-                        <form
-                            action={logoutAction}
-                            className="card-actions mt-2"
-                        >
-                            <button
-                                type="submit"
-                                className="btn btn-primary w-full"
-                            >
-                                <FontAwesomeIcon icon={faArrowRightToBracket} />
-                                <span>Logout</span>
-                            </button>
-                        </form>
+
+                        <SmartLogoutForm />
                     </div>
                 </div>
             )}

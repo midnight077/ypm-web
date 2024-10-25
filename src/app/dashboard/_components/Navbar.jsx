@@ -36,12 +36,7 @@ export default function Navbar() {
                 </ModalOpenButton>
 
                 <SessionProvider>
-                    <AvatarDropdown
-                        logoutAction={async () => {
-                            "use server";
-                            await signOut({ redirectTo: "/" });
-                        }}
-                    />
+                    <AvatarDropdown />
                 </SessionProvider>
             </div>
         </nav>
