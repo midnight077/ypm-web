@@ -11,8 +11,6 @@ import {
 import ModalOpenButton from "./ModalOpenButton";
 import AvatarDropdown from "./AvatarDropdown";
 
-import { signOut } from "@utils/auth";
-
 export default function Navbar() {
     return (
         <nav className="navbar bg-base-100 glass rounded-box shadow-lg sticky top-6">
@@ -36,12 +34,7 @@ export default function Navbar() {
                 </ModalOpenButton>
 
                 <SessionProvider>
-                    <AvatarDropdown
-                        logoutAction={async () => {
-                            "use server";
-                            await signOut({ redirectTo: "/" });
-                        }}
-                    />
+                    <AvatarDropdown />
                 </SessionProvider>
             </div>
         </nav>
