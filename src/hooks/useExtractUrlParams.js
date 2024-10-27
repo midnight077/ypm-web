@@ -9,6 +9,7 @@ export default function useExtractUrlParams(paramNames, removeFromUrl = true) {
     const urlParams = useSearchParams();
     const router = useRouter();
 
+    const [extracted, setExtracted] = useState(false);
     const [extractedParamNameValueMap, setExtractedParamNameValueMap] =
         useState({});
 
@@ -22,16 +23,26 @@ export default function useExtractUrlParams(paramNames, removeFromUrl = true) {
             }, {}),
         );
 
-        if (removeFromUrl) {
-            paramNames.forEach((paramName) => {
-                delete urlParamNameValueMap[paramName];
-            });
+        setExtracted(true);
+    }, [urlParams]);
 
-            const newUrlParams = new URLSearchParams(urlParamNameValueMap);
+    useEffect(() => {
+        if (extracted) {
+            const urlParamNameValueMap = Object.fromEntries(urlParams);
 
-            router.replace(`${urlPath}?${newUrlParams.toString()}`);
+            if (removeFromUrl) {
+                paramNames.forEach((paramName) => {
+                    delete urlParamNameValueMap[paramName];
+                });
+
+                const newUrlParams = new URLSearchParams(urlParamNameValueMap);
+
+                router.replace(`${urlPath}?${newUrlParams.toString()}`);
+            }
+
+            setExtracted(false);
         }
-    }, []);
+    }, [extracted]);
 
     return extractedParamNameValueMap;
 }

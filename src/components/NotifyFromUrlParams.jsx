@@ -19,10 +19,30 @@ export default function NotifyFromUrlParams({ paramNameNotifyTypeMap }) {
     useEffect(() => {
         paramNames.forEach((paramName) => {
             const paramValue = paramNameValueMap[paramName];
+
             if (paramValue) {
                 const notifyType = paramNameNotifyTypeMap[paramName];
                 const notifyFunction = notifyTypeFunctionMap[notifyType];
-                notifyFunction(paramValue);
+
+                if (paramName === "error") {
+                    switch (paramValue) {
+                        case "OAuthCallbackError":
+                            notifyFunction("Not authenticated!");
+                            break;
+
+                        case "Configuration":
+                            notifyFunction(
+                                "Could not initiate authentication!",
+                            );
+                            break;
+
+                        default:
+                            notifyFunction("Something went wrong!");
+                            break;
+                    }
+                } else {
+                    notifyFunction(paramValue);
+                }
             }
         });
     }, [paramNameValueMap]);
