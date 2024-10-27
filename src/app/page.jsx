@@ -12,6 +12,7 @@ export default async function HomePage() {
                     paramNameNotifyTypeMap={{
                         error: "error", // default name if oauth fails
                         logoutSuccess: "success",
+                        sessionError: "error",
                     }}
                 />
             </Suspense>

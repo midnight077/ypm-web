@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import Image from "next/image";
@@ -12,6 +12,15 @@ export default function AvatarDropdown() {
     const { data: session, status } = useSession();
     const [user, setUser] = useState({ name: "", email: "", image: null });
     const router = useRouter();
+
+    useEffect(() => {
+        if (session?.error) {
+            const urlParams = new URLSearchParams({
+                sessionError: "Session expired! Please login again.",
+            });
+            signOut({ redirectTo: `/?${urlParams.toString()}` });
+        }
+    }, [session?.error]);
 
     useEffect(() => {
         if (status === "authenticated") {

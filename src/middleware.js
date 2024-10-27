@@ -14,7 +14,7 @@ export default auth((req) => {
     const isProtectedRoute = pathname.startsWith("/dashboard");
     const isAuthRoute = pathname === "/";
 
-    const isAuthenticated = req.auth;
+    const isAuthenticated = req.auth && !req.auth.error;
 
     if (isProtectedRoute && !isAuthenticated) {
         return NextResponse.redirect(new URL("/", nextUrl));
