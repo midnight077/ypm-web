@@ -2,22 +2,22 @@
 
 import { AuthError } from "next-auth";
 
-import { signOut } from "@utils/auth";
+import { signIn } from "@utils/auth";
 
-export default async function logout() {
+export default async function loginAction() {
     try {
         const urlParams = new URLSearchParams({
-            logoutSuccess: "Logged out successfully!",
+            loginSuccess: "Logged in successfully!",
         });
-        await signOut({
-            redirectTo: `/?${urlParams.toString()}`,
+        await signIn("google", {
+            redirectTo: `/dashboard?${urlParams.toString()}`,
         });
     } catch (error) {
         if (error instanceof AuthError) {
             console.log(error);
             return {
                 errors: {},
-                message: "Logout failed! Please inform us if problem persists.",
+                message: "Login failed! Please inform us if problem persists.",
             };
         }
 

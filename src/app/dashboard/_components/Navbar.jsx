@@ -8,7 +8,8 @@ import {
     faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 
-import ModalOpenButton from "./ModalOpenButton";
+import ModalOpenButton from "@components/ModalOpenButton";
+
 import AvatarDropdown from "./AvatarDropdown";
 
 export default function Navbar() {

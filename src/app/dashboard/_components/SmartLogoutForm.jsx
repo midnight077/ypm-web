@@ -5,11 +5,11 @@ import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 
 import SmartForm, { useSmartFormContext } from "@components/SmartForm";
 
-import logout from "../_actions/logout";
+import logoutAction from "../_actions/logoutAction";
 
 export default function SmartLogoutForm() {
     return (
-        <SmartForm serverAction={logout} className="card-actions mt-2">
+        <SmartForm serverAction={logoutAction} className="card-actions mt-2">
             <LogoutForm />
         </SmartForm>
     );

@@ -5,11 +5,11 @@ import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 
 import SmartForm, { useSmartFormContext } from "@components/SmartForm";
 
-import login from "../_actions/login";
+import loginAction from "../_actions/loginAction";
 
 export default function SmartLoginForm() {
     return (
-        <SmartForm serverAction={login}>
+        <SmartForm serverAction={loginAction}>
             <LoginForm />
         </SmartForm>
     );
