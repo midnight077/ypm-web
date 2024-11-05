@@ -5,10 +5,8 @@ import { useFormStatus } from "react-dom";
 
 import { useRouter } from "next/navigation";
 
-import { z } from "zod";
-import toast from "react-hot-toast/headless";
-
-import { issuesToErrors } from "@utils/zod";
+import { validateData, extractSchema } from "@utils/zod";
+import notify from "@utils/notify";
 
 const SmartFormContext = createContext(null);
 
@@ -59,18 +57,15 @@ export default function SmartForm({
         let validatedData = null;
 
         if (formSchema) {
-            const clientValidation = formSchema.safeParse(rawFormData);
+            const { errors, data } = validateData(formSchema, rawFormData);
 
-            if (!clientValidation.success) {
-                const issues = clientValidation.error.errors;
-                const errors = issuesToErrors(issues);
-
+            if (errors) {
                 setErrors(errors);
-                toast.error("Invalid form data!");
+                notify("error", "Invalid form data!");
                 return;
             }
 
-            validatedData = clientValidation.data;
+            validatedData = data;
         }
 
         if (serverAction) {
@@ -83,16 +78,16 @@ export default function SmartForm({
             if (response.success) {
                 setValues(initialValues);
                 if (response.message) {
-                    toast.success(response.message);
+                    notify("success", response.message);
                 }
             } else if (response.errors) {
                 setErrors(response.errors);
                 if (response.message) {
-                    toast.error(response.message);
+                    notify("error", response.message);
                 }
             } else {
                 if (response.message) {
-                    toast(response.message);
+                    notify("info", response.message);
                 }
             }
 
@@ -109,14 +104,12 @@ export default function SmartForm({
             return;
         }
 
-        const { shape } = formSchema;
-        const InputSchema = z.object({ [name]: shape[name] });
-        const inputValidation = InputSchema.safeParse({ [name]: value });
+        const inputSchema = extractSchema(formSchema, name);
+        const inputData = { [name]: value };
 
-        if (value && !inputValidation.success) {
-            const issues = inputValidation.error.errors;
-            const errors = issuesToErrors(issues);
+        const { errors } = validateData(inputSchema, inputData);
 
+        if (value && errors) {
             setErrors((prevErrors) => {
                 return { ...prevErrors, ...errors };
             });

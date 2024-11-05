@@ -1,7 +1,7 @@
 import "@styles/globals.css";
 import "@utils/fontawesome.js";
 
-import Notifications from "./_components/Notifications";
+import Notifications from "@components/Notifications";
 
 export const metadata = {
     title: "YPM",

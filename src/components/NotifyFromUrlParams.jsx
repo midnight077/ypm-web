@@ -2,15 +2,9 @@
 
 import { useEffect } from "react";
 
-import toast from "react-hot-toast/headless";
-
 import useExtractUrlParams from "@hooks/useExtractUrlParams";
 
-const notifyTypeFunctionMap = {
-    success: toast.success,
-    error: toast.error,
-    info: toast,
-};
+import notify from "@utils/notify";
 
 export default function NotifyFromUrlParams({ paramNameNotifyTypeMap }) {
     const paramNames = Object.keys(paramNameNotifyTypeMap);
@@ -22,26 +16,26 @@ export default function NotifyFromUrlParams({ paramNameNotifyTypeMap }) {
 
             if (paramValue) {
                 const notifyType = paramNameNotifyTypeMap[paramName];
-                const notifyFunction = notifyTypeFunctionMap[notifyType];
 
                 if (paramName === "error") {
                     switch (paramValue) {
                         case "OAuthCallbackError":
-                            notifyFunction("Not authenticated!");
+                            notify(notifyType, "Not authenticated!");
                             break;
 
                         case "Configuration":
-                            notifyFunction(
+                            notify(
+                                notifyType,
                                 "Could not initiate authentication!",
                             );
                             break;
 
                         default:
-                            notifyFunction("Something went wrong!");
+                            notify(notifyType, "Something went wrong!");
                             break;
                     }
                 } else {
-                    notifyFunction(paramValue);
+                    notify(notifyType, paramValue);
                 }
             }
         });
