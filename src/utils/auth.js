@@ -1,23 +1,10 @@
 import NextAuth from "next-auth";
-import Google from "next-auth/providers/google";
 
 import db from "@utils/db";
 import { User } from "@models/index";
+import authConfig from "@utils/auth.config";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-    pages: {
-        signIn: "/",
-        error: "/",
-    },
-    providers: [
-        Google({
-            authorization: {
-                params: {
-                    scope: "email profile openid https://www.googleapis.com/auth/youtube.readonly",
-                },
-            },
-        }),
-    ],
     callbacks: {
         async jwt({ token, account }) {
             if (account) {
@@ -49,4 +36,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return session;
         },
     },
+    ...authConfig,
 });

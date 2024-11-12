@@ -7,7 +7,10 @@ export function ContentCard({ content }) {
         : content.thumbnailUrl;
 
     return (
-        <div className="card lg:card-side bg-base-100 glass shadow-lg lg:mb-6 max-w-[320px] lg:max-w-none lg:max-h-[180px]">
+        <div
+            key={`content-${content.id}`}
+            className="card lg:card-side bg-base-100 glass shadow-lg lg:mb-6 max-w-[320px] lg:max-w-none lg:max-h-[180px]"
+        >
             <figure className="flex-shrink-0 min-w-[320px] min-h-[180px]">
                 <img src={thumbnailSrc} alt={`content-${content.id}`} />
             </figure>
@@ -36,9 +39,12 @@ export function ContentCard({ content }) {
     );
 }
 
-export function ContentCardSkeleton() {
+export function ContentCardSkeleton({ key }) {
     return (
-        <div className="card lg:card-side bg-base-100 glass shadow-lg lg:mb-6 max-w-[320px] lg:max-w-none lg:max-h-[180px]">
+        <div
+            key={key}
+            className="card lg:card-side bg-base-100 glass shadow-lg lg:mb-6 max-w-[320px] lg:max-w-none lg:max-h-[180px]"
+        >
             <figure className="skeleton flex-shrink-0 min-w-[320px] min-h-[180px]"></figure>
             <div className="card-body py-6">
                 <div className="skeleton card-title h-6 w-1/2"></div>
@@ -78,8 +84,8 @@ export function ContentsDisplaySkeleton() {
         <div className="flex flex-wrap gap-6 justify-center lg:block">
             {Array(4)
                 .fill()
-                .map(() => {
-                    return <ContentCardSkeleton />;
+                .map((e, i) => {
+                    return <ContentCardSkeleton key={i} />;
                 })}
         </div>
     );

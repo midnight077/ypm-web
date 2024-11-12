@@ -1,6 +1,9 @@
+import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 
-import { auth } from "@utils/auth";
+import authConfig from "@utils/auth.config";
+
+const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
     const isServerAction = req.headers.get("next-action");
