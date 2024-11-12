@@ -1,7 +1,7 @@
 import Modal from "@components/Modal";
 
 import SearchForm from "./SearchForm";
-import BookmarkForm from "./BookmarkForm";
+import SmartBookmarkForm from "./SmartBookmarkForm";
 
 export default function Modals() {
     return (
@@ -11,7 +11,7 @@ export default function Modals() {
             </Modal>
 
             <Modal id="bookmark_modal">
-                <BookmarkForm />
+                <SmartBookmarkForm />
             </Modal>
         </div>
     );

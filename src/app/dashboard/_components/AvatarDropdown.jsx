@@ -38,7 +38,7 @@ export default function AvatarDropdown() {
                 className={`btn btn-ghost btn-circle avatar ${!user.image && "placeholder"}`}
             >
                 <div
-                    className={`w-10 h-10 rounded-full relative ${!user.image && "bg-neutral text-neutral-content"}`}
+                    className={`w-10 h-10 rounded-full relative ${status === "authenticated" ? !user.image && "bg-neutral text-neutral-content" : "skeleton"}`}
                 >
                     {user.image ? (
                         <Image

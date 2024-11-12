@@ -1,6 +1,9 @@
 import { Suspense } from "react";
 
 import NotifyFromUrlParams from "@components/NotifyFromUrlParams";
+import { ContentsDisplaySkeleton } from "@components/Content";
+
+import PlaylistsDisplay from "./_components/PlaylistsDisplay";
 
 export default async function DashboardPage() {
     return (
@@ -11,7 +14,9 @@ export default async function DashboardPage() {
                 />
             </Suspense>
 
-            <div className="bg-base-100">hi there</div>
+            <Suspense fallback={ContentsDisplaySkeleton()}>
+                <PlaylistsDisplay />
+            </Suspense>
         </>
     );
 }
