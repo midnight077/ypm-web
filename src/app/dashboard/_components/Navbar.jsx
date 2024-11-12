@@ -14,7 +14,7 @@ import AvatarDropdown from "./AvatarDropdown";
 
 export default function Navbar() {
     return (
-        <nav className="navbar bg-base-100 glass rounded-box shadow-lg sticky top-6">
+        <nav className="navbar bg-base-100 glass rounded-box shadow-lg sticky top-6 z-50">
             <div className="navbar-start">
                 <Link href="/dashboard" className="text-xl font-bold px-4">
                     YPM

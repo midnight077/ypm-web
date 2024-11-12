@@ -100,6 +100,8 @@ export default function SmartForm({
     }
 
     function handleChange(name, value) {
+        setValues({ ...values, [name]: value });
+
         if (!formSchema) {
             return;
         }

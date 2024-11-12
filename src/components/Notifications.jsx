@@ -18,7 +18,7 @@ export default function Notifications() {
         <div
             onMouseEnter={startPause}
             onMouseLeave={endPause}
-            className="toast toast-top toast-center z-50"
+            className="toast toast-top toast-center z-[60]"
         >
             {toasts
                 .filter((toast) => toast.visible)
