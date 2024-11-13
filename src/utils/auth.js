@@ -19,7 +19,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     { upsert: true, new: true },
                 ).select("_id");
 
-                token.userId = user._id;
+                token.user_id = user._id;
             }
 
             if (Date.now() >= token.expires_at * 1000) {
@@ -30,7 +30,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
         async session({ session, token }) {
             session.accessToken = token.accessToken;
-            session.userId = token.userId;
+            session.user_id = token.user_id;
             session.error = token.error;
 
             return session;

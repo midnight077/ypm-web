@@ -28,9 +28,9 @@ export default async function bookmarkAction(formData) {
 
         await addExtraThumbnailInfo(playlistInfo, playlistVideosInfo);
 
-        const { userId } = await auth();
+        const { user_id } = await auth();
 
-        await bookmarkPLaylist(userId, playlistInfo, playlistVideosInfo);
+        await bookmarkPLaylist(user_id, playlistInfo, playlistVideosInfo);
 
         revalidatePath("/dashboard");
 
