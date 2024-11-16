@@ -1,40 +1,11 @@
 import NextAuth from "next-auth";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
 
 import db from "@utils/db";
-import { User } from "@models/index";
 import authConfig from "@utils/auth.config";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-    callbacks: {
-        async jwt({ token, account }) {
-            if (account) {
-                token.accessToken = account.access_token;
-                token.expires_at = account.expires_at;
-
-                await db.connect();
-
-                const user = await User.findOneAndUpdate(
-                    { email: token.email },
-                    { name: token.name, image: token.picture },
-                    { upsert: true, new: true },
-                ).select("_id");
-
-                token.user_id = user._id;
-            }
-
-            if (Date.now() >= token.expires_at * 1000) {
-                token.error = "AccessTokenExpired";
-            }
-
-            return token;
-        },
-        async session({ session, token }) {
-            session.accessToken = token.accessToken;
-            session.user_id = token.user_id;
-            session.error = token.error;
-
-            return session;
-        },
-    },
+    adapter: MongoDBAdapter(db.getClient()),
+    session: { strategy: "jwt" },
     ...authConfig,
 });

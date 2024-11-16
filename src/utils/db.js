@@ -1,3 +1,4 @@
+import { MongoClient, ServerApiVersion } from "mongodb";
 import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -6,25 +7,28 @@ if (!MONGODB_URI) {
     throw new Error("Unable to find MONGODB_URI environment variable");
 }
 
-let cached = global.mongoose;
+let cached = global.db;
 
 if (!cached) {
-    cached = global.mongoose = { conn: null, promise: null };
+    cached = global.db = {
+        mongoose: { conn: null, promise: null },
+        mongodb: { promise: null },
+    };
 }
 
 const db = {
     async connect() {
-        if (cached.conn) {
+        if (cached.mongoose.conn) {
             console.log("Reused existing database connection");
-            return cached.conn;
+            return cached.mongoose.conn;
         }
 
-        if (!cached.promise) {
+        if (!cached.mongoose.promise) {
             const opts = {
                 bufferCommands: false,
             };
 
-            cached.promise = mongoose
+            cached.mongoose.promise = mongoose
                 .connect(MONGODB_URI, opts)
                 .then((mongoose) => mongoose);
 
@@ -32,15 +36,30 @@ const db = {
         }
 
         try {
-            cached.conn = await cached.promise;
+            cached.mongoose.conn = await cached.mongoose.promise;
             console.log("Connected to the database");
         } catch (error) {
-            cached.promise = null;
+            cached.mongoose.promise = null;
             console.log(error);
             throw new Error("Unable to connect to the database");
         }
 
-        return cached.conn;
+        return cached.mongoose.conn;
+    },
+    getClient() {
+        if (!cached.mongodb.promise) {
+            const opts = {
+                serverApi: {
+                    version: ServerApiVersion.v1,
+                    strict: true,
+                    deprecationErrors: true,
+                },
+            };
+
+            cached.mongodb.promise = new MongoClient(MONGODB_URI, opts);
+        }
+
+        return cached.mongodb.promise;
     },
 };
 
